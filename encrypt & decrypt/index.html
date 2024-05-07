@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشفير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+        *{
+            margin: 0;padding: 0;
+            font-family: "Cairo", sans-serif;
+            direction: rtl;
+        }
+        a{
+            text-decoration: none;
+        }
+        i{
+            color: blue;
+            margin-top: 40px; margin-bottom: 0;
+            margin: auto;
+        }
+        header{
+            display: flex; justify-content: space-between;
+            padding: 8px 80px;
+            border-bottom: 1px solid gainsboro;
+        }
+        header .logo{
+            font-size: 24px; font-weight: bolder;
+        }
+        header .logo a{
+            color: #17B169;
+        }
+        header ul{
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+        header ul li{
+            height: fit-content;
+            margin: auto;
+            color: #222;
+        }
+        header ul li:hover{
+            border-bottom: 1px solid grey;
+        }
+
+        /* body */
+        .text_encrypt, .text_decrypt, .file_encrypt, .file_decrypt{
+            width: fit-content;
+            margin: auto; margin-top: 40px;
+            display: grid; grid-template-columns: auto auto; gap: 20px;
+
+        }
+        .text_decrypt, .file_encrypt, .file_decrypt{
+            display: none;
+        }
+        textarea{
+            height: 250px; width: 400px;
+            resize: none;
+            border-radius: 4px;
+            border: 1px solid gray;
+            padding: 12px 20px;
+            font-size: 14px;
+        }
+        .file_encrypt div, .file_decrypt div{
+            height: 250px; width: 400px;
+            border-radius: 4px;
+            border: 1px dashed blue;
+            padding: 12px 20px;
+            font-size: 14px;
+            display: flex; flex-direction: column;
+        }
+        .file_encrypt div p, .file_decrypt div p{
+            color: blue;
+            width: fit-content; margin: auto; margin-top: -60px;
+        }
+        input[type="submit"]{
+            background-color: #17B169; color: #fff;
+            border: none;
+            width: fit-content;
+            padding: 6px 30px;
+            border-radius: 4px;
+            margin-top: -5px;
+            font-size: 14px;
+        }
+        textarea:disabled{
+        background-color: #ddf ;color: #000;
+        }
+
+        /* footer */
+        footer{
+            background-color: #17B169; color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="">تشفير</a></div>
+        <ul>
+            <li onclick="showet()">تشفير النصوص</li>
+            <li onclick="showdt()">فك تشفير النصوص</li>
+            <li onclick="showef()">تشفير الملفات</li>
+            <li onclick="showdf()">فك تشفير الملفات</li>
+        </ul>
+    </header>
+    <div class="text_encrypt" id="text_encrypt">
+        <textarea name="" id="start_text_encrypt" class="start_text_encrypt" placeholder="أدخل النص هنا"></textarea>
+        <textarea name="" id="end_text_encrypt" class="end_text_encrypt" placeholder="النص المشفر" disabled></textarea>
+        <input type="submit" value="تشفير" onclick="encrypt_text()">
+    </div>
+    <div class="text_decrypt" id="text_decrypt">
+        <textarea name="" id="end_text_decrypt" class="start_text_encrypt" placeholder=" النص هنا" disabled></textarea>
+        <textarea name="" id="start_text_decrypt" class="end_text_encrypt" placeholder="أدخل النص المشفر" ></textarea>
+        <div></div>
+        <input type="submit" value="فك تشفير"  onclick="decrypt_text()">
+    </div>
+    <div class="file_encrypt" id="file_encrypt">
+        <label for="upload_file_encrypt">
+            <div>
+                <i class="fa-solid fa-cloud-arrow-up fa-6x"></i>
+                <p>إضغط لرفع الملف</p>
+                <input type="file" id="upload_file_encrypt" accept="text/plain" style="display: none;">
+            </div>
+        </label>
+        <a href="file.txt" download="ملف مشفر.txt">
+            <div>
+                <i class="fa-solid fa-cloud-arrow-down fa-6x"></i>
+                <p>إضغط لتحميل الملف المشفر</p>
+            </div>
+        </a>
+        <input type="submit" value="تشفير الملف" onclick="encrypt_file()">
+    </div>
+    <div class="file_decrypt" id="file_decrypt">
+        <a href="file.txt" download="ملف نصي.txt">
+            <div>
+                <i class="fa-solid fa-cloud-arrow-down fa-6x"></i>
+                <p>إضغط لتحميل الملف </p>
+            </div>
+        </a>
+        <label for="upload_file_decrypt">
+            <div>
+                <i class="fa-solid fa-cloud-arrow-up fa-6x"></i>
+                <p>إضغط لرفع الملف المشفر</p>
+                <input type="file" id="upload_file_decrypt" accept="text/plain" style="display: none;">
+            </div>
+        </label>
+        <p></p>
+        <input type="submit" value=" فك تشفير الملف" onclick="encrypt_file()">
+    </div>
+    <footer>
+        جميع الحقوق محفوظة، تشفير 2024
+    </footer>
+</body>
+</html>
+
+<script>
+    function showet() {
+        window.text_encrypt.style.display="grid"
+        window.text_decrypt.style.display="none"
+        window.file_encrypt.style.display="none"
+        window.file_decrypt.style.display="none"
+    }
+    function showdt() {
+        window.text_encrypt.style.display="none"
+        window.text_decrypt.style.display="grid"
+        window.file_encrypt.style.display="none"
+        window.file_decrypt.style.display="none"
+    }
+    function showef() {
+        window.text_encrypt.style.display="none"
+        window.text_decrypt.style.display="none"
+        window.file_encrypt.style.display="grid"
+        window.file_decrypt.style.display="none"
+    }
+    function showdf() {
+        window.text_encrypt.style.display="none"
+        window.text_decrypt.style.display="none"
+        window.file_encrypt.style.display="none"
+        window.file_decrypt.style.display="grid"
+    }
+</script>
+
+<script>
+    function encrypt_text() {
+        if (window.start_text_encrypt.value.trim() !== "") {
+            window.end_text_encrypt.disabled = false;
+        }
+    }
+    function decrypt_text() {
+        if (window.start_text_decrypt.value.trim() !== "") {
+            window.end_text_decrypt.disabled = false;
+        }
+    }
+
+</script>
